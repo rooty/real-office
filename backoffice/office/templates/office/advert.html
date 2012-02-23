@@ -1,0 +1,97 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - User messages{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url view_adverts %}">Объявления</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Объявление
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <h2>Описание объекта</h2>
+    <table class="table table-condensed table-bordered span12">
+        <tr>
+            <td class="span12">Адрес: {{ advert.city.name }}, {{ advert.street.name }}, дом. {{ advert.housenumber }}</td>
+        </tr>
+        <tr>
+            <td class="span8" colspan="3">{{ advert.desciption|safe  }}</td>
+            <td class="span4"><img src="{{ MEDIA_URL }}{{ advert.poster_mainpage }}" /></td>
+        </tr>
+    </table>
+    <h2>Доход/Затраты</h2>
+    <table class="table table-condensed table-bordered span12">
+    <tr>
+        <td class="span6">
+            <table style="width: 100%">
+                <form method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td colspan="3">{{ payform.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ payform.payment }}</td>
+                        <td>{{ payform.summa }}</td>
+                        <td><button  style="width: 100%;" type="submit" class="btn btn-primary">+</button></td>
+                    </tr>
+                </form>
+            </table>
+            <table class="table table-striped table-bordered table-condensed">
+            {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.payment }}</td>
+                    <td>{{ payment.description }}</td>
+                    <td>{{ payment.summa|floatformat:2 }} грн.</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </td>
+        <td class="span6">
+            <table style="width: 100%">
+                <form method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td colspan="3">{{ costform.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ costform.cost }}</td>
+                        <td>{{ costform.summa }}</td>
+                        <td><div class="actions"><button style="width: 100%;" type="submit" class="btn btn-primary">+</button></div></td>
+                    </tr>
+                </form>
+                </table>
+                <table class="table table-striped table-bordered table-condensed">
+                {% for cost in costs %}
+                    <tr>
+                        <td>{{ cost.cost }}</td>
+                        <td>{{ cost.description }}</td>
+                        <td>{{ cost.summa|floatformat:2 }} грн.</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+    </table>
+    {% if project.owner == request.user %}
+        <div class="btn-toolbar">
+{% comment %}
+            <div class="btn-group">
+                <a class="btn btn-primary" href="">Закрыть проект</a>
+            </div>
+{% endcomment %}
+            <div class="btn-group">
+                <a class="btn btn-danger" href="{% url project_add_task project.id %}">Добавить задачу</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

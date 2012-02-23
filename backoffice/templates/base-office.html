@@ -1,0 +1,145 @@
+{% load utils  message_count %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DoroHouse</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+      <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
+      <script type="text/javascript" src="{{ MEDIA_URL }}tiny_mce/tiny_mce.js"></script>
+      <script type="text/javascript">
+          $().ready(function() {
+              tinyMCE.init({
+                  mode: "textareas",
+                  theme: "advanced",
+                  theme_advanced_buttons1 : "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,bold,italic,underline,separator,forecolor,backcolor,separator,removeformat",
+                  theme_advanced_buttons2 : "",
+                  theme_advanced_buttons3 : "",
+                  theme_advanced_toolbar_location: "top",
+                  theme_advanced_toolbar_align: "left",
+                  plugins: "searchreplace"
+              });
+          });
+
+      </script>
+
+    <!-- Le styles -->
+    <link href="/static/assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="/static/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/office/">DoroHouse/BackOffice</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="{% current request "/office/" "active" %}"><a href="{% url view_home %}">Home</a></li>
+              <li class="{% current request "/admin/" "active" %}"><a href="{% url admin:index %}" target="_blank">Admin</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+            <div class="nav-collapse">
+                <form class="navbar-search pull-right">
+                    <input type="text" class="search-query" placeholder="Поиск">
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Сообщения</li>
+                  <li class="{% current request "^/office/messages/folder/1/$" %}"><a href="{% url view_messages 1 %}">
+                      <i class="icon-envelope"></i>Входящие {% pmcount %}</a></li>
+                  <li class="{% current request "^/office/messages/folder/2/$" %}"><a href="{% url view_messages 2 %}">
+                      <i class="icon-envelope"></i>Исходящие</a></li>
+                  <li class="{% current request "^/office/messages/folder/3/$" %}"><a href="{% url view_messages 3 %}">
+                      <i class="icon-envelope"></i>Доставленные</a></li>
+                <li class="nav-header">Админ интерфейс</li>
+                  <li class="{% current request "/projects/" %}"><a href="{% url view_projects %}"><i class="icon-folder-close"></i>Проекты</a></li>
+                  <li class="{% current request "/adverts/" %}"><a href="{% url view_adverts %}"><i class="icon-book"></i>Объекты</a></li>
+                  <li class="{% current request "/contacts/" %}">
+                      <a href="{% url view_contacts %}">
+                      <i class="icon-list-alt"></i>Контакты</a>
+                  </li>
+              <li class="nav-header">Файлы интерфейс</li>
+              <li><a href="#"><i class="icon-download-alt"></i>Файловый архив</a></li>
+              <li><a href="#">Link</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+            {% block breadcrumb %}
+            <ul class="breadcrumb">
+                <li class="active">
+                    <a href="#">Home</a>
+                </li>
+            </ul>
+            {% endblock %}
+          <div class="row-fluid">
+              {% block content %}
+              {% endblock %}
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Black Cat  2011-2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/assets/js/jquery.js"></script>
+    <script src="/static/assets/js/bootstrap-transition.js"></script>
+    <script src="/static/assets/js/bootstrap-alert.js"></script>
+    <script src="/static/assets/js/bootstrap-modal.js"></script>
+    <script src="/static/assets/js/bootstrap-dropdown.js"></script>
+    <script src="/static/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/assets/js/bootstrap-tab.js"></script>
+    <script src="/static/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/static/assets/js/bootstrap-popover.js"></script>
+    <script src="/static/assets/js/bootstrap-button.js"></script>
+    <script src="/static/assets/js/bootstrap-collapse.js"></script>
+    <script src="/static/assets/js/bootstrap-carousel.js"></script>
+    <script src="/static/assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>

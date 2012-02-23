@@ -1,0 +1,6 @@
+*.pyc
+.idea/*
+media/*
+local_settings.py
+settings_prod.py
+mkall.py

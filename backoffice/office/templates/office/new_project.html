@@ -1,0 +1,41 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - Новый проект{% endblock %}
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url view_projects %}">Проекты</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Проект
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-error">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="POST">{% csrf_token %}
+    <table class="table table-condensed" style="width: 500px;">
+        <tr>
+            <td>Название проекта:</td><td>{{ form.title }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">{{ form.description }}</td>
+        </tr>
+    </table>
+    <div class="btn-group">
+        <input type="submit" class="btn btn-primary" value="Сохранить">
+    </div>
+    </form>
+</div>
+
+{% endblock %}

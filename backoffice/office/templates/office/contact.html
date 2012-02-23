@@ -1,0 +1,52 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - Contact{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url view_projects %}">Проекты</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Контакт
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-condensed table-bordered span8">
+        <tr>
+            <td class="span2">Ф.И.О.:</td>
+            <td class="span6">{{ contact.fio }}<img src="{{ contact.logocompany_small }}" /></td>
+        </tr>
+        <tr>
+            <td class="span2">Тел:</td>
+            <td class="span6">{{ contact.tel }} {{ contact.tel2 }}</td>
+        </tr>
+        <tr>
+            <td class="span2">Email:</td>
+            <td class="span6">{{ contact.email }}</td>
+        </tr>
+        <tr>
+            <td class="span2">Skype:</td>
+            <td class="span6">{{ contact.skype }}</td>
+        </tr>
+        <tr>
+            <td class="span2">Комисия:</td>
+            <td class="span6">{{ contact.comision }}, {{ contact.comissionvalue }}</td>
+        </tr>
+    </table>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a class="btn btn-info" href="{% url edit_contact contact.id contacttype %}">Редактировать</a>
+            </div>
+            <br />
+            <div class="btn-group">
+                <a class="btn btn-danger" href="{% url del_contact contact.id contacttype %}">Удалить</a>
+            </div>
+        </div>
+{% endblock %}

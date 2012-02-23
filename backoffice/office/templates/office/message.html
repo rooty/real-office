@@ -1,0 +1,38 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - User messages{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Сообщение
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" href="{% url reply_message  message.id %}">Ответить</a>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-danger" href="{% url del_message  message.id %}">Удалить</a>
+        </div>
+    </div>
+
+    <table class="table table-condensed table-bordered" style="width: 500px;">
+    <form method="POST">{% csrf_token %}
+        <tr>
+            <td>От кого:&nbsp;{{ message.user_from }}</td>
+            <td style="width: 80%">Тема:&nbsp;{{ message.subject }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">{{ message.body|safe }}</td>
+        </tr>
+    </form>
+    </table>
+{% endblock %}

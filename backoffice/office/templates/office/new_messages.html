@@ -1,0 +1,26 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - User messages{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-error">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <table class="table table-condensed" style="width: 500px;">
+    <form method="POST">{% csrf_token %}
+        <tr>
+            <td>Кому:</td><td>{{ form.user_to }}</td><td><input type="submit" class="btn  btn-primary" value="Отправить"></td>
+        </tr>
+        <tr>
+            <td>Тема:</td><td colspan="2">{{ form.subject }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">{{ form.body }}</td>
+        </tr>
+    </form>
+    </table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - Contact{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url view_contacts contacttype %}">Контакты</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Контакт
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-error">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <table class="table  span2">
+    {{ form.as_table }}
+    </table>
+    <div class="btn-toolbar">
+        <input class="btn btn-info" type="submit" value="Сохранить">
+    </div>
+    </form>
+{% endblock %}

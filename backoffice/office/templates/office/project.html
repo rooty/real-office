@@ -1,0 +1,79 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - User messages{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url view_home %}">Home</a> <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url view_projects %}">Проекты</a> <span class="divider">/</span>
+        </li>
+        <li class="active">
+            Проект
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <table class="table table-condensed table-bordered span12">
+        <tr>
+            <td class="span6">Описание: {{ project.title }}</td>
+        </tr>
+        <tr>
+            <td class="span12" colspan="3">{{ project.description|safe }}</td>
+        </tr>
+        <tr>
+            <td class="span12" colspan="3">
+                Куратор: {{ project.owner }},
+                Дата начала: {{ project.date_start|date:"d-m-Y" }},
+                Дата окончания {{ project.date_end|date:"d-m-Y" }}
+            </td>
+        </tr>
+    </table>
+    {% if project.owner == request.user %}
+        <div class="btn-toolbar">
+        <div class="btn-group">
+            <a class="btn btn-info" href="{% url edit_project project.id %}">Редактировать проект</a>
+        </div>
+    {% endif %}
+    <h2>Задачи</h2>
+    <table class="table table-condensed table-bordered">
+    <th>#</th>
+    <th>Заголовок</th>
+    <th>Создана</th>
+    <th>Назначена</th>
+    <th>Состояние</th>
+    {% for task in tasks %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="#task_{{ task.id }}"></a><a href="{% url task_edit task.id %}">{{ task.title }}</a></td>
+            <td>{{ task.created }}</td>
+            <td>{{ task.worker }}</td>
+            <td>
+                {% if task.terminate %}
+                    выполена
+                {% else %}
+                    в работе
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% if project.owner == request.user %}
+        <div class="btn-toolbar">
+{% comment %}
+            <div class="btn-group">
+                <a class="btn btn-primary" href="">Закрыть проект</a>
+            </div>
+{% endcomment %}
+            <div class="btn-group">
+                <a class="btn btn-danger" href="{% url project_add_task project.id %}">Добавить задачу</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

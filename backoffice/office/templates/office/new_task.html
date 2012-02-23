@@ -1,0 +1,38 @@
+{% extends "base-office.html" %}
+{% load i18n %}
+
+{% block title %}DoroHouse - User messages{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-error">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="POST">{% csrf_token %}
+    <table class="table table-condensed" style="width: 500px;">
+        <tr>
+            <td>Задача:</td><td colspan="2">{{ form.title }}</td>
+        </tr>
+        <tr>
+            <td>Назначена:</td><td colspan="2">{{ form.worker }}</td>
+        </tr>
+        <tr>
+            <td>Состояние:</td><td colspan="2">{{ form.state }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">{{ form.description }}</td>
+        </tr>
+        <tr>
+            <td><label>Закончить задачу?</label></td><td>{{ form.terminate }}</td>
+            <td></td>
+        </tr>
+    </table>
+    <div class="btn-group">
+        <input type="submit" class="btn btn-primary" value="Сохранить">
+    </div>
+    </form>
+</div>
+
+{% endblock %}
